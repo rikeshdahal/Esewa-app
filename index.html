@@ -589,7 +589,7 @@
 
             <div class="topbar">
 
-                <button class="profile" onclick="showToast('Profile Opened')">
+                <button class="profile" onclick="window.location.href='profile.html',showToast('Profile Opened')">
 
                     <div class="avatar">
                         <img src="profile.png" alt="profile">
@@ -599,7 +599,7 @@
                         </div>
                     </div>
 
-                    <h2>Hi, Rikesh</h2>
+                    <h2 id="headerName">Hi, Rikesh</h2>
 
                 </button>
 
@@ -991,12 +991,12 @@
                 <div>Home</div>
             </button>
 
-            <button class="nav-item" onclick="setActive(this,'Statement')">
+            <button class="nav-item" onclick="setActive(this,'Statement') , window.location.href='statenments.html'">
                 <img src="statements.png">
                 <div>Statement</div>
             </button>
 
-            <button class="scan-btn" onclick="showToast('Scan To Pay')">
+            <button class="scan-btn" onclick="window.location.href='scan.html',showToast('Scan To Pay')">
                 <img src="bottom scan to pay.png">
             </button>
 
@@ -1017,38 +1017,40 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        // Load name from localStorage (saved from profile.html)
+        const savedProfile = JSON.parse(localStorage.getItem('esewa_profile'));
+        if (savedProfile && savedProfile.name) {
+            const firstName = savedProfile.name.trim().split(' ')[0];
+            document.getElementById('headerName').innerText = 'Hi, ' + firstName;
+        }
 
-        const toggleBtn = document.getElementById('toggleBalance');
-        const eyeIcon = document.getElementById('eyeIcon');
-        const balanceText = document.getElementById('balanceText');
-        const rewardText = document.getElementById('rewardText');
+        // Load balance from localStorage (shared across pages)
+        let balanceAmount = parseFloat(localStorage.getItem('esewa_balance')) || 25450.75;
+        let rewardPoints = parseFloat(localStorage.getItem('esewa_rewards')) || 1250.50;
+
+        // Save initial values if not set
+        if (!localStorage.getItem('esewa_balance')) {
+            localStorage.setItem('esewa_balance', balanceAmount);
+            localStorage.setItem('esewa_rewards', rewardPoints);
+        }
 
         let hidden = true;
+        const toggleBtn = document.getElementById('toggleBalance');
 
         toggleBtn.addEventListener('click', () => {
-
             hidden = !hidden;
-
             if (hidden) {
-
                 balanceText.innerText = 'NPR XXXX.XX';
                 rewardText.innerText = 'XXXX.XX';
                 eyeIcon.src = 'hide.png';
-
                 showToast('Balance Hidden');
-
             } else {
-
-                balanceText.innerText = 'NPR 25,450.75';
-                rewardText.innerText = '1,250.50';
+                balanceText.innerText = 'NPR ' + formatMoney(balanceAmount);
+                rewardText.innerText = formatMoney(rewardPoints);
                 eyeIcon.src = 'show.png';
-
                 showToast('Balance Visible');
-
             }
-
         });
-
         function showToast(message) {
 
             const toast = document.getElementById('toast');
@@ -1063,6 +1065,12 @@
                 toast.classList.remove('show');
             }, 1800);
 
+        }
+
+        function formatMoney(num) {
+            return Number(num).toLocaleString('en-US', {
+                minimumFractionDigits: 2, maximumFractionDigits: 2
+            });
         }
 
         function setActive(el, page) {
