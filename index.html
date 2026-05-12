@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eSewa Clone</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #f3f4f6;
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+
+        .mobile {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            background: #f3f4f6;
+            position: relative;
+            padding-bottom: 110px;
+        }
+
+        .header {
+            background: #59c100;
+            color: white;
+            padding: 18px 16px 85px;
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+        }
+
+        .profile:active {
+            transform: scale(0.98);
+        }
+
+        .avatar {
+            position: relative;
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            background: #f2f2f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .verify {
+            position: absolute;
+            right: -2px;
+            bottom: 2px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #2cc300;
+            border: 3px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check {
+            width: 5px;
+            height: 10px;
+            border-right: 3px solid white;
+            border-bottom: 3px solid white;
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .profile h2 {
+            color: white;
+            font-size: 20px;
+            font-weight: 100;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.9);
+        }
+
+        .icon-btn img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .balance-card {
+            background: #fff;
+            margin: -70px 14px 14px;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+        }
+
+        .balance-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 10px 14px;
+            border-top: 3px solid #42c300;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .balance-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .balance-item img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .balance-item h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #5a5a5a;
+            line-height: 1.1;
+        }
+
+        .balance-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #6d7680;
+            font-weight: 500;
+        }
+
+        .eye-btn {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #f3f3f3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .eye-btn:active {
+            transform: scale(0.9);
+        }
+
+        .eye-btn img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 18px 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .quick-item {
+            text-align: center;
+            cursor: pointer;
+            border-radius: 14px;
+            padding: 8px 4px;
+        }
+
+        .quick-item:active {
+            background: #f3f3f3;
+            transform: scale(0.95);
+        }
+
+        .quick-item img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+
+        .quick-item p {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .section {
+            background: #fff;
+            margin: 14px;
+            border-radius: 24px;
+            padding: 18px 14px 22px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.06);
+        }
+
+        .section h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #2f2f2f;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 26px 10px;
+        }
+
+        .item {
+            text-align: center;
+            cursor: pointer;
+            border-radius: 14px;
+            padding: 8px 2px;
+        }
+
+        .item:active {
+            background: #f3f3f3;
+            transform: scale(0.95);
+        }
+
+        .item img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
+        .item p {
+            margin-top: 10px;
+            font-size: 13px;
+            line-height: 18px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .AD {
+            width: calc(100% - 28px);
+            margin: 14px;
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border: 1px solid #ddd;
+            cursor: pointer;
+            display: block;
+        }
+
+        .AD:active {
+            transform: scale(0.98);
+        }
+
+        .AD img {
+            width: 100%;
+            display: block;
+        }
+
+        .ad-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            background: white;
+        }
+
+        .title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .book {
+            font-size: 12px;
+            font-weight: 700;
+            color: #39c600;
+            text-transform: uppercase;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 100%;
+            max-width: 420px;
+            height: 82px;
+            background: #fff;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #555;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #42c300;
+        }
+
+        .nav-item:active {
+            transform: scale(0.92);
+        }
+
+        .nav-item img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+            margin-bottom: 4px;
+        }
+
+        .scan-btn {
+            width: 78px;
+            height: 78px;
+            background: transparent;
+            border-radius: 50%;
+            margin-top: -42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .scan-btn:active {
+            transform: scale(0.92);
+        }
+
+        .scan-btn img {
+            width: 62px;
+            height: 62px;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 110px;
+            transform: translateX(-50%);
+            background: #222;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            z-index: 999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            bottom: 120px;
+        }
+
+        /* ADD THIS CSS */
+
+        .voting-section {
+            padding: 16px 0 18px;
+            overflow: hidden;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px 12px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #2f2f2f;
+        }
+
+        .view-more-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .view-more-btn:active {
+            transform: scale(0.95);
+        }
+
+        .view-more-btn span {
+            font-size: 14px;
+            font-weight: 800;
+            color: #46bf19;
+            letter-spacing: .4px;
+        }
+
+        .view-more-btn img {
+            width: 17px;
+            height: 17px;
+            object-fit: contain;
+        }
+
+        .voting-scroll {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            gap: 20px;
+            padding: 0 16px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        .voting-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .vote-item {
+            min-width: 82px;
+            text-align: center;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .vote-item:active {
+            transform: scale(0.94);
+        }
+
+        .vote-tag {
+            background: #e5f7df;
+            color: #54be33;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 0;
+            border-radius: 999px;
+            margin-bottom: 8px;
+            width: 58px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .vote-item img {
+            width: 58px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+            margin: auto;
+        }
+
+        .vote-item p {
+            margin-top: 10px;
+            font-size: 11px;
+            line-height: 15px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .support-card {
+            background: #fff;
+            margin: 14px;
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+            border: 1px solid #ececec;
+        }
+
+        .support-row {
+            width: 100%;
+            background: #fff;
+            padding: 18px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ededed;
+            cursor: pointer;
+        }
+
+        .support-row:last-child {
+            border-bottom: none;
+        }
+
+        .support-row:active {
+            background: #f7f7f7;
+        }
+
+        .support-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .support-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .support-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .support-text h3 {
+            font-size: 14px;
+            text-align: left;
+            color: #2f2f2f;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .support-text p {
+            font-size: 12px;
+            color: #737373;
+            line-height: 16px;
+            font-weight: 500;
+        }
+
+        .eva-row .support-icon img {
+            width: 34px;
+            height: 34px;
+        }
+
+        @media(max-width:360px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile">
+
+        <div class="header">
+
+            <div class="topbar">
+
+                <button class="profile" onclick="showToast('Profile Opened')">
+
+                    <div class="avatar">
+                        <img src="profile.png" alt="profile">
+
+                        <div class="verify">
+                            <i class="check"></i>
+                        </div>
+                    </div>
+
+                    <h2>Hi, Rikesh</h2>
+
+                </button>
+
+                <div class="header-icons">
+
+                    <button class="icon-btn" onclick="showToast('Search Opened')">
+                        <img src="search.png">
+                    </button>
+
+                    <button class="icon-btn" onclick="showToast('Notifications Opened')">
+                        <img src="notification.png">
+                    </button>
+
+                    <button class="icon-btn" onclick="showToast('Bot Opened')">
+                        <img src="bot.png">
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="balance-card">
+
+            <div class="balance-top">
+
+                <div class="balance-item">
+                    <img src="balance.png">
+
+                    <div>
+                        <h3 id="balanceText">NPR XXXX.XX</h3>
+                        <p>Balance</p>
+                    </div>
+                </div>
+
+                <button class="eye-btn" id="toggleBalance">
+                    <img src="hide.png" id="eyeIcon">
+                </button>
+
+                <div class="balance-item">
+                    <img src="reward.png">
+
+                    <div>
+                        <h3 id="rewardText">XXXX.XX</h3>
+                        <p>Reward Points</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="quick-actions">
+
+                <button class="quick-item" onclick="showToast('Load Money')">
+                    <img src="load money.png">
+                    <p>Load <br>Money</p>
+                </button>
+
+                <button class="quick-item" onclick="showToast('Send Money')">
+                    <img src="send money.png">
+                    <p>Send <br>Money</p>
+                </button>
+
+                <button class="quick-item" onclick="showToast('Bank Transfer')">
+                    <img src="bank transfer.png">
+                    <p>Bank Transfer</p>
+                </button>
+
+                <button class="quick-item" onclick="showToast('Remittance')">
+                    <img src="rammittance.png">
+                    <p>Remittance</p>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Utility & Bill Payments</h2>
+
+            <div class="grid">
+
+                <button class="item" onclick="showToast('Topup & Data')">
+                    <img src="topup & data.png">
+                    <p>Topup <br>& Data</p>
+                </button>
+
+                <button class="item" onclick="showToast('Electricity')">
+                    <img src="electricity.png">
+                    <p>Electricity</p>
+                </button>
+
+                <button class="item" onclick="showToast('Khanepani')">
+                    <img src="khanepani.png">
+                    <p>Khanepani</p>
+                </button>
+
+                <button class="item" onclick="showToast('Internet')">
+                    <img src="internet.png">
+                    <p>Internet</p>
+                </button>
+
+                <button class="item" onclick="showToast('Govt Payment')">
+                    <img src="govt.payments.png">
+                    <p>Govt. Payment</p>
+                </button>
+
+                <button class="item" onclick="showToast('Traffic Fine')">
+                    <img src="traffic fine payment.png">
+                    <p>Traffic Fine <br> payment</p>
+                </button>
+
+                <button class="item" onclick="showToast('Education Fee')">
+                    <img src="education fee.png">
+                    <p>Education Fee</p>
+                </button>
+
+                <button class="item" onclick="showToast('More Services')">
+                    <img src="more choose.png">
+                </button>
+
+            </div>
+
+        </div>
+        <div class="section">
+            <h2>Travels & Ticketing</h2>
+
+            <div class="grid">
+
+                <div class="item">
+                    <img src="airlines.png">
+                    <p>Airlines</p>
+                </div>
+
+                <div class="item">
+                    <img src="intlairlines.png">
+                    <p>Intl Airlines</p>
+                </div>
+
+                <div class="item">
+                    <img src="hotels.png">
+                    <p>Hotels</p>
+                </div>
+
+                <div class="item">
+                    <img src="busticket.png">
+                    <p>Bus Ticket</p>
+                </div>
+
+                <div class="item">
+                    <img src="movies.png">
+                    <p>Movies</p>
+                </div>
+
+                <div class="item">
+                    <img src="cablecar.png">
+                    <p>Cable Car</p>
+                </div>
+
+                <div class="item">
+                    <img src="events.png">
+                    <p>Events</p>
+                </div>
+                <div class="item">
+                    <img src="more choose.png">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Insurance</h2>
+
+            <div class="grid">
+
+                <div class="item">
+                    <img src="supertermlife.png">
+                    <p>Super Term Life</p>
+
+                </div>
+
+                <div class="item">
+                    <img src="saharahealth.png">
+                    <p>Sahara Health</p>
+                </div>
+
+                <div class="item">
+                    <img src="esewacare.png">
+                    <p>eSewa <br>Care</p>
+                </div>
+
+                <div class="item">
+                    <img src="more choose.png">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Financial Payments</h2>
+
+            <div class="grid">
+
+                <div class="item">
+                    <img src="meroshare.png">
+                    <p>Mero Share & DEMAT</p>
+                </div>
+
+                <div class="item">
+                    <img src="sip.png">
+                    <p>SIP</p>
+                </div>
+
+                <div class="item">
+                    <img src="atmwithdraw.png">
+                    <p>ATM Withdraw</p>
+                </div>
+
+                <div class="item">
+                    <img src="creditcard.png">
+                    <p>Credit Card</p>
+                </div>
+
+                <div class="item">
+                    <img src="emi.png">
+                    <p>EMI</p>
+                </div>
+
+                <div class="item">
+                    <img src="broker.png">
+                    <p>Broker</p>
+                </div>
+
+                <div class="item">
+                    <img src="microfinance.png">
+                    <p>Micro Finance</p>
+                </div>
+                <div class="item">
+                    <img src="more choose.png">
+                </div>
+
+            </div>
+        </div>
+
+        <button class="AD">
+
+            <img src="hotelbooking.png">
+
+            <div class="ad-bottom">
+                <span class="title">Hotel Booking</span>
+                <span class="book" onclick="showToast('Hotel Booking Opened')">BOOK NOW</span>
+            </div>
+
+        </button>
+
+
+
+        <div class="section voting-section">
+
+            <div class="section-head">
+
+                <h2>Voting & Events</h2>
+
+                <button class="view-more-btn" onclick="showToast('View More Opened')">
+
+                    <span>VIEW MORE</span>
+
+                    <img src="more choose.png">
+
+                </button>
+
+            </div>
+
+            <div class="voting-scroll">
+
+                <button class="vote-item" onclick="showToast('MANHUNT INTL NEPAL')">
+
+                    <div class="vote-tag">Voting</div>
+
+                    <img src="manhunt.png">
+
+                    <p>MANHUNT<br>INT'L NEPAL</p>
+
+                </button>
+
+                <button class="vote-item" onclick="showToast('MR & MISS JUNIOR')">
+
+                    <div class="vote-tag">Voting</div>
+
+                    <img src="junior.png">
+
+                    <p>MR & MISS<br>JUNIOR</p>
+
+                </button>
+
+                <button class="vote-item" onclick="showToast('DSA STAR-2026')">
+
+                    <div class="vote-tag">Voting</div>
+
+                    <img src="dsa.png">
+
+                    <p>DSA<br>STAR-2026</p>
+
+                </button>
+
+                <button class="vote-item" onclick="showToast('MR & MISS SEE')">
+
+                    <div class="vote-tag">Voting</div>
+
+                    <img src="seeicon.png">
+
+                    <p>MR &<br>MISS SEE</p>
+
+                </button>
+
+                <button class="vote-item" onclick="showToast('voice Of Nepal')">
+
+                    <div class="vote-tag">Voting</div>
+
+                    <img src="voiceofnepal.png">
+
+                    <p>voice Of <br>Nepal</p>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="support-card">
+
+            <button class="support-row" onclick="showToast('Offers & Promocodes')">
+
+                <div class="support-left">
+
+                    <div class="support-icon">
+                        <img src="offers.png">
+                    </div>
+
+                    <div class="support-text">
+                        <h3>Offers & Promocodes</h3>
+                        <p>View all offers & available promocodes</p>
+                    </div>
+
+                </div>
+
+            </button>
+
+            <button class="support-row" onclick="showToast('24x7 Help & Support')">
+
+                <div class="support-left">
+
+                    <div class="support-icon">
+                        <img src="support.png">
+                    </div>
+
+                    <div class="support-text">
+                        <h3>24x7 Help & Support</h3>
+                        <p>Raise a ticket or view progress of your tickets</p>
+                    </div>
+
+                </div>
+
+            </button>
+
+            <button class="support-row eva-row" onclick="showToast('eVA Opened')">
+
+                <div class="support-left">
+
+                    <div class="support-icon">
+                        <img src="eva.png">
+                    </div>
+
+                    <div class="support-text">
+                        <h3>eSewa Virtual Assistant (eVA)</h3>
+                        <p>eSewa AI Assistant for your queries</p>
+                    </div>
+
+                </div>
+
+            </button>
+
+        </div>
+
+        <div class="bottom-nav">
+
+            <button class="nav-item active" onclick="setActive(this,'Home')">
+                <img src="home.png">
+                <div>Home</div>
+            </button>
+
+            <button class="nav-item" onclick="setActive(this,'Statement')">
+                <img src="statements.png">
+                <div>Statement</div>
+            </button>
+
+            <button class="scan-btn" onclick="showToast('Scan To Pay')">
+                <img src="bottom scan to pay.png">
+            </button>
+
+            <button class="nav-item" onclick="setActive(this,'Support')">
+                <img src="support.png">
+                <div>Support</div>
+            </button>
+
+            <button class="nav-item" onclick="setActive(this,'More')">
+                <img src="more.png">
+                <div>More</div>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+
+        const toggleBtn = document.getElementById('toggleBalance');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const balanceText = document.getElementById('balanceText');
+        const rewardText = document.getElementById('rewardText');
+
+        let hidden = true;
+
+        toggleBtn.addEventListener('click', () => {
+
+            hidden = !hidden;
+
+            if (hidden) {
+
+                balanceText.innerText = 'NPR XXXX.XX';
+                rewardText.innerText = 'XXXX.XX';
+                eyeIcon.src = 'hide.png';
+
+                showToast('Balance Hidden');
+
+            } else {
+
+                balanceText.innerText = 'NPR 25,450.75';
+                rewardText.innerText = '1,250.50';
+                eyeIcon.src = 'show.png';
+
+                showToast('Balance Visible');
+
+            }
+
+        });
+
+        function showToast(message) {
+
+            const toast = document.getElementById('toast');
+
+            toast.innerText = message;
+
+            toast.classList.add('show');
+
+            clearTimeout(window.toastTimer);
+
+            window.toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 1800);
+
+        }
+
+        function setActive(el, page) {
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            el.classList.add('active');
+
+            showToast(page + ' Opened');
+
+        }
+
+        console.log('eSewa Clone Loaded Successfully');
+
+    </script>
+
+</body>
+
+</html>
