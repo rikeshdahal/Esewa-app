@@ -479,11 +479,11 @@
             <div class="top-bar">
 
                 <button class="top-btn" id="flashBtn">
-                    <img src="flashoff.png" id="flashImg">
+                    <img src="icons/flashoff.png" id="flashImg">
                 </button>
 
                 <button class="top-btn" onclick="window.location.href='index.html'">
-                    <img src="closebtn.png">
+                    <img src="icons/closebtn.png">
                 </button>
 
             </div>
@@ -493,14 +493,14 @@
             </div>
 
             <div class="fonepay">
-                <img src="fonepay.png">
+                <img src="icons/fonepay.png">
             </div>
 
             <div class="gallery-wrap">
 
                 <button class="gallery-btn" id="galleryBtn">
 
-                    <img src="galleryqr.png">
+                    <img src="icons/galleryqr.png">
 
                     <span>ADD QR CODE FROM GALLERY</span>
 
@@ -555,7 +555,7 @@
                     </div>
 
                     <button class="up-btn" id="expandBtn">
-                        <img src="uparrow.png">
+                        <img src="icons/uparrow.png">
                     </button>
 
                 </div>
@@ -569,10 +569,10 @@
                     <div class="qr-card">
 
                         <div class="qr-box">
-                            <img src="myqr.png">
+                            <img src="icons/myqr.png">
                         </div>
 
-                        <img src="esewalogo.png" class="esewa-logo">
+                        <img src="icons/esewalogo.png" class="esewa-logo">
 
                         <div class="name">
                             Rikesh Dahal
@@ -596,7 +596,7 @@
 
                     <div class="favorite-wrap">
 
-                        <img src="favoriteqr.png">
+                        <img src="icons/favoriteqr.png">
 
                         <h2>
                             No favorite QR code<br>
@@ -617,7 +617,7 @@
 
                     <button class="action-btn" onclick="downloadQR()">
 
-                    <img src="downloadqr.png">
+                    <img src="icons/downloadqr.png">
 
                     <span>DOWNLOAD QR</span>
 
@@ -625,7 +625,7 @@
 
                     <button class="action-btn" onclick="shareQR()">
 
-                        <img src="shareqr.png">
+                        <img src="icons/shareqr.png">
 
                         <span>SHARE</span>
 
@@ -851,7 +851,7 @@
 
             if (flashOn) {
 
-                flashImg.src = 'flashon.png';
+                flashImg.src = 'icons/flashon.png';
 
                 overlay.style.background =
                     'rgba(0,0,0,.28)';
@@ -860,7 +860,7 @@
 
             } else {
 
-                flashImg.src = 'flashoff.png';
+                flashImg.src = 'icons/flashoff.png';
 
                 overlay.style.background =
                     'rgba(0,0,0,.45)';
@@ -932,9 +932,9 @@
 
             const a = document.createElement('a');
 
-            a.href = 'myqr.png';
+            a.href = 'icons/myqr.png';
 
-            a.download = 'esewa-qr.png';
+            a.download = 'icons/esewa-qr.png';
 
             a.click();
 
