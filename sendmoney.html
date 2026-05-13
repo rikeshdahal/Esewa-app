@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eSewa Send Money Clone</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #e9edf2;
+            display: flex;
+            justify-content: center;
+        }
+
+        button,
+        input,
+        textarea {
+            border: none;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .mobile {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            background: #edf1f5;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding-bottom: 120px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .header {
+            background: #4bc000;
+            padding: 14px 16px 78px;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+            color: white;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .back-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .back-btn:active {
+            transform: scale(0.92);
+        }
+
+        .back-icon {
+            width: 14px;
+            height: 14px;
+            border-left: 3px solid white;
+            border-bottom: 3px solid white;
+            transform: rotate(45deg);
+            margin-left: 5px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .righticons {
+            align-items: right;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .txn-icon-btn {
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .2s;
+
+        }
+
+        .txn-icon-btn img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        .txn-icon-btn:active {
+            transform: scale(.92);
+        }
+
+        /* TRANSACTION CODE BOX */
+        .code-box {
+            background: #f5f5f5;
+            border-radius: 15px;
+            padding: 16px 18px;
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-box span {
+            font-size: 14px;
+            color: #8a8a8a;
+        }
+  
+
+        .code-box strong {
+            padding-left: 50px;
+            font-size: 16px;
+            color: #222;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: #eaf8e2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .copy-btn img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        .copy-btn:active {
+            transform: scale(.92);
+        }
+
+        .card {
+            background: white;
+            margin: -58px 14px 14px;
+            border-radius: 22px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .balance-card {
+            padding: 18px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .balance-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .balance-left img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .balance-left h2 {
+            font-size: 22px;
+            color: #525b66;
+            margin-bottom: 4px;
+        }
+
+        .balance-left p {
+            font-size: 16px;
+            color: #7d8793;
+        }
+
+        .refresh-btn {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #f3f5f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .refresh-btn img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .receiver-card {
+            background: white;
+            margin: 0 16px;
+            border-radius: 26px;
+            padding: 24px 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .receiver-card h3 {
+            font-size: 20px;
+            color: #232323;
+            margin-bottom: 8px;
+        }
+
+        .receiver-card p {
+            color: #4f4f4f;
+            font-size: 17px;
+        }
+
+        .escrow-row {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .escrow-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .escrow-left span {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .qmark {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #46c400;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .switch {
+            width: 58px;
+            height: 30px;
+            background: #d9d9d9;
+            border-radius: 999px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .switch::before {
+            content: "";
+            width: 24px;
+            height: 24px;
+            background: #52565c;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: 0.25s;
+        }
+
+        .switch.active {
+            background: #c5f4b2;
+        }
+
+        .switch.active::before {
+            left: 31px;
+            background: #42c300;
+        }
+
+        .amount-section {
+            background: white;
+            margin-top: 18px;
+            padding: 24px 20px 40px;
+        }
+
+        .amount-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 26px;
+        }
+
+        .amount-head h2 {
+            color: #2d2d2d;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .amount-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #5dc50a;
+            min-width: 160px;
+            justify-content: flex-end;
+            padding-bottom: 8px;
+        }
+
+        .amount-box span {
+            color: #3fc100;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .amount-box input {
+            font-size: 42px;
+            width: 110px;
+            text-align: right;
+            color: #222;
+            background: transparent;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            padding: 12px 8px 0;
+        }
+
+        .key {
+            height: 64px;
+            border-radius: 18px;
+            font-size: 34px;
+            background: #f4f4f4;
+            color: #607083;
+            cursor: pointer;
+        }
+
+        .key:active {
+            transform: scale(0.95);
+        }
+
+        .continue-btn {
+            height: 58px;
+            font-size: 18px;
+            border-radius: 18px;
+            width: calc(100% - 28px);
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 386px;
+            background: #42c300;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .continue-btn:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+
+        .purpose-card {
+            background: white;
+            margin: 0 16px;
+            border-radius: 26px;
+            padding: 24px 18px 24px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .fund-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fund-row h3 {
+            font-size: 16px;
+            color: #646464;
+            margin-bottom: 5px;
+        }
+
+        .fund-row h2 {
+            font-size: 22px;
+            color: #232323;
+        }
+
+        .fund-row p {
+            font-size: 16px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .amount-edit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .amount-edit span {
+            font-size: 28px;
+            color: #212121;
+        }
+
+        .edit-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #42c300;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e6e6e6;
+            margin: 18px 0;
+        }
+
+        .purpose-title {
+            font-size: 20px;
+            color: #2b2b2b;
+            margin-bottom: 18px;
+        }
+
+        .purpose-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .purpose-item {
+            height: 62px;
+            font-size: 15px;
+            border-radius: 15px;
+            border: 3px solid #8a8a8a;
+            background: white;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 14px;
+            color: #585858;
+            cursor: pointer;
+        }
+
+        .purpose-item.active {
+            border-color: #4bc000;
+            background: #effde7;
+            color: #42c300;
+        }
+
+        .radio {
+            width: 28px;
+            height: 28px;
+            border: 3px solid #767676;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .purpose-item.active .radio {
+            border-color: #42c300;
+        }
+
+        .purpose-item.active .radio::after {
+            content: "";
+            width: 14px;
+            height: 14px;
+            background: #42c300;
+            border-radius: 50%;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+        }
+
+        textarea {
+            width: 100%;
+            margin-top: 18px;
+            background: #f5f5f5;
+            border-radius: 16px;
+            padding: 18px;
+            font-size: 18px;
+            resize: none;
+            height: 90px;
+        }
+
+        .notice-card {
+            background: #e8f1fb;
+            margin: 0 16px 18px;
+            border-radius: 24px;
+            padding: 22px 18px;
+        }
+
+        .notice-card h2 {
+            color: #4692e6;
+            margin-bottom: 12px;
+        }
+
+        .notice-card p {
+            font-size: 18px;
+            color: #4f4f4f;
+            line-height: 30px;
+        }
+
+        .confirm-card {
+            background: white;
+            margin: 0 16px;
+            border-radius: 28px;
+            padding: 22px 18px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .pay-box {
+            background: #f7f7f7;
+            border-radius: 18px;
+            padding: 32px 10px;
+            text-align: center;
+        }
+
+        .pay-box p {
+            color: #777;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .pay-box h1 {
+            font-size: 64px;
+            color: #3fc100;
+            margin-bottom: 10px;
+        }
+
+        .pay-box h3 {
+            color: #4b5c72;
+            font-size: 24px;
+        }
+
+        .payment-title {
+            margin-top: 24px;
+            margin-bottom: 18px;
+            font-size: 24px;
+            color: #222;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .detail-row span {
+            font-size: 18px;
+            color: #717171;
+        }
+
+        .detail-row strong {
+            font-size: 18px;
+            color: #222;
+            font-weight: 500;
+        }
+
+        .bill-box {
+            margin-top: 16px;
+            background: white;
+            border-radius: 26px;
+            padding: 22px 18px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .bill-box h3 {
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .success-card {
+            background: white;
+            margin: -60px 16px 16px;
+            border-radius: 28px;
+            padding: 28px 18px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .success-card h2 {
+            color: #57657b;
+            margin-bottom: 20px;
+        }
+
+        .success-icon {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #42c300;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 0 12px #eaf9e4;
+        }
+
+        .success-check {
+            width: 24px;
+            height: 48px;
+            border-right: 7px solid white;
+            border-bottom: 7px solid white;
+            transform: rotate(45deg);
+            margin-top: -6px;
+        }
+
+        .success-icon {
+            position: relative;
+            overflow: visible;
+            width: 92px;
+            height: 92px;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(66, 195, 0, 0.25);
+            animation: bubbleFly 2.3s ease-out forwards;
+            pointer-events: none;
+            backdrop-filter: blur(1px);
+        }
+
+        @keyframes bubbleFly {
+
+            0% {
+                transform:
+                    translate(0, 0) scale(0.2);
+                opacity: 1;
+            }
+
+            40% {
+                opacity: 0.9;
+            }
+
+            100% {
+                transform:
+                    translate(var(--x), var(--y)) scale(2);
+                opacity: 0;
+            }
+
+        }
+
+        .success-card h1 {
+            margin-top: 30px;
+            font-size: 46px;
+            color: #1f2632;
+        }
+
+        .success-card h3 {
+            margin-top: 12px;
+            font-size: 20px;
+            color: #5c6878;
+            font-weight: 500;
+        }
+
+        .success-card p {
+            margin-top: 14px;
+            color: #9da5b1;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .details-link {
+            margin-top: 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #42c300;
+            font-size: 22px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .arrow-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #edfbe7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .split-box,
+        .expense-box {
+            background: white;
+            border: 2px solid #ececec;
+            border-radius: 22px;
+            padding: 24px 18px;
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .split-left,
+        .expense-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .split-left img,
+        .expense-left img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .split-left h3,
+        .expense-left h3 {
+            text-align: left;
+            font-size: 17px;
+            color: #424242;
+        }
+
+        .expense-left p {
+            color: #888;
+            margin-top: 6px;
+            font-size: 15px;
+            text-align: left;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .done-btn {
+            background: #42c300;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #222;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-size: 15px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .25s;
+            z-index: 999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            bottom: 115px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile">
+
+        <!-- SCREEN 1 -->
+
+        <div class="screen active" id="screen1">
+
+            <div class="header">
+
+                <div class="topbar">
+
+                    <button class="back-btn" onclick="window.location.href='index.html'">
+                        <div class="back-icon"></div>
+                    </button>
+
+                    <h1 class="title">Send Money</h1>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="balance-card">
+
+                    <div class="balance-left">
+
+                        <!-- PNG ICON -->
+                        <img src="icons/balance.png">
+
+                        <div>
+                            <h2>NPR XXXX.XX</h2>
+                            <p>Balance</p>
+                        </div>
+
+                    </div>
+
+                    <button class="refresh-btn">
+
+                        <!-- PNG ICON -->
+                        <img src="icons/refresh.png">
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="receiver-card">
+                <p>Send fund to</p>
+
+                <h3>Sh***** Store</h3>
+
+                <p>+9779841442385</p>
+
+                <div class="escrow-row">
+
+                    <div class="escrow-left">
+
+                        <span>Use eScrow Service</span>
+                        <button class="qmark" onclick="showToast('it helps us to secure transection')">?</button>
+
+                    </div>
+
+                    <div class="switch" id="escrowSwitch"></div>
+
+                </div>
+
+            </div>
+
+            <div class="amount-section">
+
+                <div class="amount-head">
+
+                    <h2>Send Amount</h2>
+
+                    <div class="amount-box">
+
+                        <span>रु.</span>
+
+                        <input type="text" id="amountInput" value="">
+
+                    </div>
+
+                </div>
+
+                <div class="keypad">
+
+                    <button class="key" onclick="pressKey('1')">1</button>
+                    <button class="key" onclick="pressKey('2')">2</button>
+                    <button class="key" onclick="pressKey('3')">3</button>
+
+                    <button class="key" onclick="pressKey('4')">4</button>
+                    <button class="key" onclick="pressKey('5')">5</button>
+                    <button class="key" onclick="pressKey('6')">6</button>
+
+                    <button class="key" onclick="pressKey('7')">7</button>
+                    <button class="key" onclick="pressKey('8')">8</button>
+                    <button class="key" onclick="pressKey('9')">9</button>
+
+                    <button class="key" onclick="pressKey('.')">.</button>
+                    <button class="key" onclick="pressKey('0')">0</button>
+                    <button class="key" onclick="backspace()">⌫</button>
+
+                </div>
+
+            </div>
+
+            <button class="continue-btn" onclick="goToPurpose()">
+                CONTINUE
+            </button>
+
+        </div>
+
+        <!-- SCREEN 2 -->
+
+        <div class="screen" id="screen2">
+
+            <div class="header">
+
+                <div class="topbar">
+
+                    <button class="back-btn" onclick="showScreen('screen1')">
+                        <div class="back-icon"></div>
+                    </button>
+
+                    <h1 class="title">Send Money</h1>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="balance-card">
+
+                    <div class="balance-left">
+                        <img src="icons/balance.png">
+
+                        <div>
+                            <h2>NPR XXXX.XX</h2>
+                            <p>Balance</p>
+                        </div>
+
+                    </div>
+
+                    <button class="refresh-btn">
+                        <img src="icons/refresh.png">
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="purpose-card">
+
+                <div class="fund-row">
+
+                    <div>
+
+                        <h3>Send fund to</h3>
+
+                        <h2>Sh***** Store</h2>
+
+                        <p>+9779841442385</p>
+
+                    </div>
+
+                    <div class="amount-edit">
+
+                        <span>रु. <strong id="previewAmount">0</strong></span>
+
+                        <button class="edit-btn" onclick="showScreen('screen1')">
+                            ✎
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="divider"></div>
+
+                <h2 class="purpose-title">Purpose</h2>
+
+                <div class="purpose-grid">
+
+                    <button class="purpose-item active" onclick="selectPurpose(this,'Bill sharing')">
+
+                        <div class="radio"></div>
+
+                        Bill sharing
+
+                    </button>
+
+                    <button class="purpose-item" onclick="selectPurpose(this,'Family Expenses')">
+
+                        <div class="radio"></div>
+
+                        Family Expen...
+
+                    </button>
+
+                    <button class="purpose-item" onclick="selectPurpose(this,'Groceries')">
+
+                        <div class="radio"></div>
+
+                        Groceries
+
+                    </button>
+
+                    <button class="purpose-item" onclick="selectPurpose(this,'Lend/Borrow')">
+
+                        <div class="radio"></div>
+
+                        Lend/borrow
+
+                    </button>
+
+                    <button class="purpose-item" onclick="selectPurpose(this,'Personal Use')">
+
+                        <div class="radio"></div>
+
+                        Personal Use
+
+                    </button>
+
+                    <button class="purpose-item" onclick="selectPurpose(this,'Ride Sharing')">
+
+                        <div class="radio"></div>
+
+                        Ride Sharing
+
+                    </button>
+
+                </div>
+
+                <textarea placeholder="Write remarks..." id="remarks"></textarea>
+
+            </div>
+
+            <button class="continue-btn" onclick="goToConfirm()">
+                CONTINUE
+            </button>
+
+        </div>
+
+        <!-- SCREEN 3 -->
+
+        <div class="screen" id="screen3">
+
+            <div class="header">
+
+                <div class="topbar">
+
+                    <button class="back-btn" onclick="showScreen('screen2')">
+                        <div class="back-icon"></div>
+                    </button>
+
+                    <h1 class="title">Send Money</h1>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="balance-card">
+
+                    <div class="balance-left">
+                        <img src="icons/balance.png">
+
+                        <div>
+                            <h2>NPR XXXX.XX</h2>
+                            <p>Balance</p>
+                        </div>
+
+                    </div>
+
+                    <button class="refresh-btn">
+                        <img src="icons/refresh.png">
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="notice-card">
+
+                <h2>ⓘ Notice</h2>
+
+                <p>
+                    Please send money only to trusted contacts after proper verification.
+                    Be aware of scams and suspicious requests.
+                </p>
+
+            </div>
+
+            <div class="confirm-card">
+
+                <div class="pay-box">
+
+                    <p>You are paying</p>
+
+                    <h1 id="confirmAmount">NPR 0</h1>
+
+                    <h3>Send Money</h3>
+
+                </div>
+
+                <h3 class="payment-title">Payment Details</h3>
+
+                <div class="detail-row">
+                    <span>eSewa ID</span>
+                    <strong>+9779841442385</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Receiver Name</span>
+                    <strong>Sh***** Store</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Purpose</span>
+                    <strong id="confirmPurpose">Bill sharing</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Remarks</span>
+                    <strong id="confirmRemarks">---</strong>
+                </div>
+
+            </div>
+
+            <div class="bill-box">
+
+                <h3>Your Bill</h3>
+
+                <div class="detail-row" style="margin-bottom:0;">
+                    <span>Total Paying Amount</span>
+                    <strong id="billAmount">0</strong>
+                </div>
+
+            </div>
+
+            <button class="continue-btn" onclick="completePayment()">
+                CONFIRM
+            </button>
+
+        </div>
+
+        <!-- SCREEN 4 -->
+
+        <div class="screen" id="screen4">
+
+            <div class="header">
+
+                <div class="topbar">
+
+                    <button class="back-btn">
+                        <div class="back-icon"></div>
+                    </button>
+
+                    <div style="display:flex;align-items:center;flex:1;justify-content:space-between;">
+
+                        <h1 class="title">Transaction</h1>
+
+                        <div class="righticons">
+
+                            <button class="txn-icon-btn">
+                                <img src="icons/pdf.png">
+                            </button>
+
+                            <button class="txn-icon-btn">
+                                <img src="icons/menu.png">
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="success-card">
+
+                <h2>Payment Successful !</h2>
+
+                <div class="success-icon">
+                    <div class="success-check"></div>
+                </div>
+
+                <h1 id="successAmount">NPR 0</h1>
+
+                <h3>
+                    Fund Transferred to Shyam Kirana Store
+                </h3>
+
+                <p id="successDate"></p>
+
+                <div class="details-link">
+
+                    View Details
+
+                    <div class="arrow-circle">›</div>
+
+                </div>
+
+                <!-- TRANSACTION CODE -->
+
+                <div class="code-box">
+
+                    <div>
+
+                        <span>Transaction Code</span>
+
+                        <strong id="txnCode">
+                            1HFFWHF
+                        </strong>
+
+                    </div>
+
+                    <button class="copy-btn" onclick="copyTxnCode()">
+
+                        <img src="icons/copy.png">
+
+                    </button>
+
+                </div>
+
+                <!-- SPLIT -->
+
+                <div class="split-box">
+
+                    <div class="split-left">
+
+                        <img src="icons/split.png">
+
+                        <h3>
+                            Split payment with friends ?
+                        </h3>
+
+                    </div>
+
+                    <span style="
+                font-size:34px;
+                color:#555;
+            ">
+                        ›
+                    </span>
+
+                </div>
+
+                <!-- EXPENSE -->
+
+                <div class="expense-box">
+
+                    <div class="expense-left">
+
+                        <img src="icons/add.png">
+
+                        <div>
+
+                            <h3>Add expense category</h3>
+
+                            <p>
+                                This will help organize your
+                                expenses.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="continue-btn done-btn" onclick="restartApp()">
+
+                DONE
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- REPLACE YOUR FULL <script> WITH THIS -->
+
+    <script>
+
+        // ── QR DATA ──────────────────────────────────────────────
+        const qrName = sessionStorage.getItem('qr_name') || 'Unknown Receiver';
+        const qrId = sessionStorage.getItem('qr_id') || 'Unknown ID';
+
+        function applyReceiverInfo() {
+            document.querySelector('#screen1 .receiver-card h3').innerText = qrName;
+            document.querySelector('#screen1 .receiver-card p:last-of-type').innerText = qrId;
+            document.querySelector('#screen2 .purpose-card h2').innerText = qrName;
+            document.querySelector('#screen2 .purpose-card p').innerText = qrId;
+            const detailStrongs = document.querySelectorAll('#screen3 .detail-row strong');
+            detailStrongs[0].innerText = qrId;
+            detailStrongs[1].innerText = qrName;
+            document.querySelector('#screen4 .success-card h3').innerText =
+                'Fund Transferred to ' + qrName;
+        }
+        applyReceiverInfo();
+
+        // ── BALANCE (localStorage) ────────────────────────────────
+        function formatMoney(num) {
+            return Number(num).toLocaleString('en-US', {
+                minimumFractionDigits: 2, maximumFractionDigits: 2
+            });
+        }
+
+        let balanceAmount = parseFloat(localStorage.getItem('esewa_balance')) || 25450.75;
+        let balanceHidden = true;
+
+        function updateBalanceUI() {
+            document.querySelectorAll('.balance-left h2').forEach(el => {
+                el.innerText = balanceHidden
+                    ? 'NPR XXXX.XX'
+                    : 'NPR ' + formatMoney(balanceAmount);
+            });
+        }
+        updateBalanceUI();
+
+        document.querySelectorAll('.refresh-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.style.transform = 'rotate(180deg)';
+                setTimeout(() => btn.style.transform = 'rotate(0deg)', 300);
+                balanceHidden = !balanceHidden;
+                updateBalanceUI();
+                showToast(balanceHidden ? 'Balance Hidden' : 'Balance: NPR ' + formatMoney(balanceAmount));
+            });
+        });
+
+        // ── KEYPAD ────────────────────────────────────────────────
+        let selectedPurpose = 'Bill sharing';
+        const amountInput = document.getElementById('amountInput');
+
+        function pressKey(value) {
+            if (amountInput.value.length >= 8) return;
+            if (value === '.' && amountInput.value.includes('.')) return;
+            amountInput.value += value;
+        }
+
+        function backspace() {
+            amountInput.value = amountInput.value.slice(0, -1);
+        }
+
+        // ── SCREENS ───────────────────────────────────────────────
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // ── ESCROW ────────────────────────────────────────────────
+        document.getElementById('escrowSwitch').addEventListener('click', function () {
+            this.classList.toggle('active');
+            showToast(this.classList.contains('active') ? 'eScrow Enabled' : 'eScrow Disabled');
+        });
+
+        // ── SCREEN 1 → 2 ─────────────────────────────────────────
+        function goToPurpose() {
+            const val = parseFloat(amountInput.value);
+            if (!amountInput.value || val <= 0) { showToast('Enter Valid Amount'); return; }
+            if (val > balanceAmount) { showToast('❌ Insufficient Balance'); return; }
+            document.getElementById('previewAmount').innerText = val.toFixed(2);
+            showScreen('screen2');
+        }
+
+        // ── PURPOSE ───────────────────────────────────────────────
+        function selectPurpose(el, purpose) {
+            document.querySelectorAll('.purpose-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            selectedPurpose = purpose;
+        }
+
+        // ── SCREEN 2 → 3 ─────────────────────────────────────────
+        function goToConfirm() {
+            const remarks = document.getElementById('remarks').value.trim();
+            if (!remarks) { showToast('Remarks is compulsory'); return; }
+            const amount = parseFloat(amountInput.value).toFixed(2);
+            document.getElementById('confirmAmount').innerText = 'NPR ' + amount;
+            document.getElementById('billAmount').innerText = amount;
+            document.getElementById('confirmPurpose').innerText = selectedPurpose;
+            document.getElementById('confirmRemarks').innerText = remarks;
+            showScreen('screen3');
+        }
+
+        // ── CONFIRM PAYMENT ───────────────────────────────────────
+        function completePayment() {
+
+            const sendAmount = parseFloat(amountInput.value);
+
+            if (sendAmount > balanceAmount) {
+                showToast('❌ Insufficient Balance');
+                return;
+            }
+
+            // BALANCE DEDUCT
+            balanceAmount = parseFloat((balanceAmount - sendAmount).toFixed(2));
+
+            localStorage.setItem('esewa_balance', balanceAmount);
+
+            // ─────────────────────────────
+            // SAVE TRANSACTION TO STATEMENT
+            // ─────────────────────────────
+
+            let transactions =
+                JSON.parse(localStorage.getItem('esewa_statements')) || [];
+
+            const now = new Date();
+
+            const transaction = {
+
+                type: 'debit',
+
+                title: 'Paid for ' + qrName,
+
+                amount: sendAmount.toFixed(2),
+
+                balance: balanceAmount.toFixed(2),
+
+                time: now.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }),
+
+                date: now.toDateString(),
+
+                logo: 'icons/esewa.png'
+
+            };
+
+            // newest first
+            transactions.unshift(transaction);
+
+            localStorage.setItem(
+                'esewa_statements',
+                JSON.stringify(transactions)
+            );
+
+            // ─────────────────────────────
+
+            balanceHidden = false;
+
+            updateBalanceUI();
+
+            document.getElementById('successAmount').innerText =
+                'NPR ' + sendAmount.toFixed(2);
+
+            document.getElementById('successDate').innerText =
+                now.toDateString() + ' • ' +
+                now.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+            document.getElementById('txnCode').innerText =
+                Math.random().toString(36)
+                    .substring(2, 10)
+                    .toUpperCase();
+
+            showScreen('screen4');
+
+            createBubbles();
+
+            // showToast('🎉 Payment Successful!');
+        }
+
+        // ── DONE / RESTART ────────────────────────────────────────
+        function restartApp() {
+            amountInput.value = '';
+            document.getElementById('remarks').value = '';
+            selectedPurpose = 'Bill sharing';
+            document.querySelectorAll('.purpose-item').forEach((item, i) => {
+                item.classList.toggle('active', i === 0);
+            });
+            sessionStorage.removeItem('qr_name');
+            sessionStorage.removeItem('qr_id');
+            window.location.href = 'index.html';
+        }
+
+        // ── COPY TXN CODE ─────────────────────────────────────────
+        function copyTxnCode() {
+            const code = document.getElementById('txnCode').innerText;
+            navigator.clipboard?.writeText(code)
+                .then(() => showToast('Copied: ' + code))
+                .catch(() => showToast('Code: ' + code));
+        }
+
+        // ── DOWNLOAD QR ───────────────────────────────────────────
+        function downloadQR() {
+            const a = document.createElement('a');
+            a.href = 'icons/myqr.png';
+            a.download = 'icons/esewa-qr.png';
+            a.click();
+        }
+
+        // ── SHARE ─────────────────────────────────────────────────
+        async function shareQR() {
+            try {
+                if (navigator.share) {
+                    await navigator.share({ title: 'eSewa QR', text: 'Scan my eSewa QR' });
+                } else {
+                    showToast('Share Unsupported');
+                }
+            } catch { showToast('Share Cancelled'); }
+        }
+
+        // ── BUBBLES ───────────────────────────────────────────────
+        function createBubbles() {
+            const icon = document.querySelector('.success-icon');
+            for (let i = 0; i < 16; i++) {
+                const b = document.createElement('span');
+                b.classList.add('bubble');
+                const size = Math.random() * 14 + 6;
+                b.style.cssText = `width:${size}px;height:${size}px;left:50%;top:50%;
+            animation-delay:${Math.random() * 0.6}s`;
+                b.style.setProperty('--x', (Math.random() * 220 - 110) + 'px');
+                b.style.setProperty('--y', (-Math.random() * 220 - 50) + 'px');
+                icon.appendChild(b);
+                setTimeout(() => b.remove(), 2600);
+            }
+        }
+
+        // ── TOAST ─────────────────────────────────────────────────
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+        }
+
+    </script>
+</body>
+
+</html>

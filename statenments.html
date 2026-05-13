@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statement</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #edf1f3;
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            border: none;
+            background: transparent;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .mobile {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            background: #edf1f3;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #43bd00;
+            padding: 18px 16px 120px;
+            position: relative;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .left-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .title {
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .icon-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn,
+        .back-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon-btn:active,
+        .back-btn:active {
+            transform: scale(.92);
+        }
+
+        .icon-btn img,
+        .back-btn img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            background: transparent;
+        }
+
+        /* OVERVIEW CARD */
+
+        .overview-card {
+            background: #f5f5f5;
+            border-radius: 28px;
+            margin-top: 28px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+        }
+
+        .overview-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .overview-left img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+
+        .overview-left h3 {
+            font-size: 18px;
+            color: #626d79;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .overview-left p {
+            font-size: 14px;
+            color: #7d8790;
+        }
+
+        .next-btn {
+            width: 42px;
+            height: 42px;
+            background: #e4f6dc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .next-btn img {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* SEARCH */
+
+        .search-wrap {
+            margin: -82px 16px 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .search-bar {
+            background: #f3f3f3;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            gap: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+        }
+
+        .search-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 17px;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .search-box input::placeholder {
+            color: #9a9a9a;
+        }
+
+        .search-box img {
+            width: 23px;
+            height: 23px;
+        }
+
+        .divider {
+            width: 1px;
+            height: 30px;
+            background: #ddd;
+        }
+
+        .filter-btn img {
+            width: 26px;
+            height: 26px;
+        }
+
+        /* FILTER OPTIONS */
+
+        .filter-options {
+            display: none;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .filter-options.show {
+            display: flex;
+        }
+
+        .filter-options button {
+            background: #f3f3f3;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .filter-chip {
+            background: #f1f1f1;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            color: #555;
+            transition: .2s;
+        }
+
+        .filter-chip.active {
+            background: #43bd00;
+            color: white;
+        }
+
+        /* COLLAPSE BUTTON */
+
+        .collapse-btn {
+            width: 40px;
+            height: 40px;
+            background: #43bd00;
+            border-radius: 50%;
+            margin: 14px auto 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: .25s;
+        }
+
+        .collapse-btn img {
+            width: 18px;
+            height: 18px;
+            transition: .25s;
+        }
+
+        .collapse-btn.active img {
+            transform: rotate(180deg);
+        }
+
+        /* STATEMENTS */
+
+        .statement-area {
+            padding: 20px 16px 40px;
+        }
+
+        .date {
+            font-size: 15px;
+            letter-spacing: 3px;
+            color: #555;
+            margin: 12px 4px 16px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 26px;
+            padding: 24px 18px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+        }
+
+        .left {
+            display: flex;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .details h2 {
+            font-size: 22px;
+            line-height: 30px;
+            font-weight: 500;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        .time {
+            font-size: 16px;
+            color: #8c97a1;
+            letter-spacing: 2px;
+            margin-bottom: 26px;
+        }
+
+        .balance-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bal-label {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #97a0a9;
+        }
+
+        .balance {
+            font-size: 20px;
+            color: #607281;
+            font-weight: 500;
+        }
+
+        .amount {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .debit {
+            color: #c54732;
+        }
+
+        .credit {
+            color: #39bf19;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+
+        .down {
+            border-top: 14px solid #c54732;
+        }
+
+        .up {
+            border-bottom: 14px solid #39bf19;
+        }
+
+        @media(max-width:390px) {
+
+            .details h2 {
+                font-size: 21px;
+                line-height: 29px;
+            }
+
+            .balance {
+                font-size: 24px;
+            }
+
+            .amount {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile">
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="topbar">
+
+                <div class="left-head">
+
+                    <button class="back-btn" onclick="window.location.href='index.html'">
+                        <img src="icons/backbtn.png">
+                    </button>
+
+                    <h1 class="title">Statement</h1>
+
+                </div>
+
+                <div class="icon-group">
+
+                    <button class="icon-btn" onclick="showToast('Share Clicked')">
+                        <img src="icons/share.png">
+                    </button>
+
+                    <button class="icon-btn" onclick="showToast('Download Clicked')">
+                        <img src="icons/download.png">
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- OVERVIEW CARD -->
+
+            <div class="overview-card">
+
+                <div class="overview-left">
+
+                    <img src="icons/finance.png">
+
+                    <div>
+                        <h3>NPR 5,550 spent on May</h3>
+                        <p>Finance 360 Overview</p>
+                    </div>
+
+                </div>
+
+                <button class="next-btn">
+                    <img src="icons/arrow.png">
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- SEARCH -->
+
+        <div class="search-wrap">
+
+            <div class="search-bar">
+
+                <div class="search-box">
+
+                    <input type="text" placeholder="Search Statement" id="searchInput" oninput="searchStatements()">
+
+                    <img src="icons/search.png">
+
+                </div>
+
+                <div class="divider"></div>
+
+                <button class="filter-btn">
+                    <img src="icons/filter.png">
+                </button>
+
+            </div>
+
+            <!-- FILTER OPTIONS -->
+
+            <div class="filter-options" id="filterOptions">
+
+                <button class="filter-chip active" data-days="7">
+                    7 days
+                </button>
+
+                <button class="filter-chip" data-days="14">
+                    14 days
+                </button>
+
+                <button class="filter-chip" data-days="30">
+                    30 days
+                </button>
+
+            </div>
+
+            <!-- COLLAPSE BUTTON -->
+
+            <button class="collapse-btn" id="toggleBtn">
+
+                <img src="icons/down.png" id="toggleIcon">
+
+            </button>
+
+        </div>
+
+        <!-- STATEMENTS -->
+
+        <div class="statement-area" id="statementArea"></div>
+
+    </div>
+
+    <script>
+
+        const statementArea =
+            document.getElementById('statementArea');
+
+        const transactions =
+            JSON.parse(localStorage.getItem('esewa_statements')) || [];
+
+        if (transactions.length === 0) {
+
+            statementArea.innerHTML = `
+    
+    <div style="
+        padding:40px;
+        text-align:center;
+        color:#777;
+        font-size:18px;
+    ">
+        No Transactions Found
+    </div>
+    
+    `;
+
+        } else {
+
+            let html = '';
+
+            let lastDate = '';
+
+            transactions.forEach(txn => {
+
+                if (txn.date !== lastDate) {
+
+                    html += `
+            
+            <div class="date">
+                ${txn.date.toUpperCase()}
+            </div>
+            
+            `;
+
+                    lastDate = txn.date;
+                }
+
+                html += `
+        
+        <div class="card">
+
+            <div class="left">
+
+                <img src="${txn.logo}" class="logo">
+
+                <div class="details">
+
+                    <h2>${txn.title}</h2>
+
+                    <div class="time">${txn.time}</div>
+
+                    <div class="balance-row">
+
+                    <div class="bal-label">
+                        BALANCE
+                    </div>
+
+                    <div class="balance">
+                        ${txn.balance}
+                    </div>
+
+</div>
+
+                </div>
+
+            </div>
+
+            <div class="right">
+
+                <div class="arrow down"></div>
+
+                <div class="amount debit">
+                    ${txn.amount}
+                </div>
+
+            </div>
+
+        </div>
+        
+        `;
+            });
+
+            statementArea.innerHTML = html;
+        }
+
+        function renderStatements(data) {
+
+            const statementArea =
+                document.getElementById('statementArea');
+
+            if (data.length === 0) {
+
+                statementArea.innerHTML = `
+        
+        <div style="
+        padding:40px;
+        text-align:center;
+        color:#777;
+        font-size:18px;
+        ">
+            No Transactions Found
+        </div>
+        
+        `;
+
+                return;
+            }
+
+            let html = '';
+
+            let lastDate = '';
+
+            data.forEach(txn => {
+
+                if (txn.date !== lastDate) {
+
+                    html += `
+            
+            <div class="date">
+                ${txn.date.toUpperCase()}
+            </div>
+            
+            `;
+
+                    lastDate = txn.date;
+                }
+
+                html += `
+        
+        <div class="card">
+
+            <div class="left">
+
+                <img src="${txn.logo}" class="logo">
+
+                <div class="details">
+
+                    <h2>${txn.title}</h2>
+
+                    <div class="time">${txn.time}</div>
+
+                    <div class="balance-row">
+
+                        <div class="bal-label">
+                            BALANCE
+                        </div>
+
+                        <div class="balance">
+                            ${txn.balance}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="right">
+
+                <div class="arrow ${txn.type === 'credit'
+                        ? 'up'
+                        : 'down'
+                    }"></div>
+
+                <div class="amount ${txn.type === 'credit'
+                        ? 'credit'
+                        : 'debit'
+                    }">
+
+                    ${txn.amount}
+
+                </div>
+
+            </div>
+
+        </div>
+        
+        `;
+            });
+
+            statementArea.innerHTML = html;
+        }
+
+        const allTransactions =
+            JSON.parse(localStorage.getItem('esewa_statements')) || [];
+
+        renderStatements(allTransactions);
+
+        function searchStatements() {
+
+            const keyword =
+                document.getElementById('searchInput')
+                    .value
+                    .toLowerCase();
+
+            const filtered =
+                allTransactions.filter(txn =>
+
+                    txn.title.toLowerCase().includes(keyword)
+                    ||
+                    txn.amount.toString().includes(keyword)
+                    ||
+                    txn.date.toLowerCase().includes(keyword)
+
+                );
+
+            renderStatements(filtered);
+        }
+
+        const toggleBtn =
+            document.getElementById('toggleBtn');
+
+        const filterOptions =
+            document.getElementById('filterOptions');
+
+        toggleBtn.addEventListener('click', () => {
+
+            filterOptions.classList.toggle('show');
+
+            toggleBtn.classList.toggle('active');
+
+        });
+
+
+        // SEARCH
+
+        function searchStatements() {
+
+            const keyword =
+                document.getElementById('searchInput')
+                    .value
+                    .toLowerCase();
+
+            const filtered =
+                filteredTransactions.filter(txn =>
+
+                    txn.title.toLowerCase().includes(keyword)
+                    ||
+                    txn.amount.toString().includes(keyword)
+                    ||
+                    txn.date.toLowerCase().includes(keyword)
+
+                );
+
+            renderStatements(filtered);
+        }
+
+
+        // FILTER SYSTEM
+
+        const chips =
+            document.querySelectorAll('.filter-chip');
+
+        let filteredTransactions =
+            [...allTransactions];
+
+        chips.forEach(chip => {
+
+            chip.addEventListener('click', () => {
+
+                chips.forEach(c =>
+                    c.classList.remove('active')
+                );
+
+                chip.classList.add('active');
+
+                const days =
+                    parseInt(chip.dataset.days);
+
+                filterByDays(days);
+
+            });
+
+        });
+
+
+        // FILTER FUNCTION
+
+        function filterByDays(days) {
+
+            const today =
+                new Date();
+
+            filteredTransactions =
+                allTransactions.filter(txn => {
+
+                    // Example:
+                    // "SUN, MAY 10"
+
+                    const parts =
+                        txn.date.replace(',', '')
+                            .split(' ');
+
+                    const month =
+                        parts[1];
+
+                    const day =
+                        parseInt(parts[2]);
+
+                    const currentYear =
+                        today.getFullYear();
+
+                    const txnDate =
+                        new Date(
+                            `${month} ${day}, ${currentYear}`
+                        );
+
+                    const diffTime =
+                        today - txnDate;
+
+                    const diffDays =
+                        diffTime / (1000 * 60 * 60 * 24);
+
+                    return diffDays <= days;
+
+                });
+
+            searchStatements();
+
+        }
+
+
+        // DEFAULT FILTER
+
+        filterByDays(7);
+
+
+    </script>
+
+</body>
+
+</html>
